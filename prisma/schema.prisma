@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                 String       @id @default(uuid())
+  email              String       @unique
+  password           String
+  name               String
+  refreshTokenVersion Int         @default(0)
+  categories         Category[]
+  transactions       Transaction[]
+  createdAt          DateTime     @default(now())
+}
+
+model Category {
+  id          String       @id @default(uuid())
+  name        String
+  type        String       // "income" или "expense"
+  color       String?      // Дополнительное поле для цвета категории
+  icon        String?      // Иконка категории
+  user        User         @relation(fields: [userId], references: [id])
+  userId      String
+  transactions Transaction[]
+  createdAt   DateTime     @default(now())
+}
+
+model Transaction {
+  id          String     @id @default(uuid())
+  amount      Float
+  description String?
+  date        DateTime   @default(now())
+  type        String     // "income" или "expense" (дублируем для удобства)
+  category    Category   @relation(fields: [categoryId], references: [id])
+  categoryId  String
+  user        User       @relation(fields: [userId], references: [id])
+  userId      String
+  createdAt   DateTime   @default(now())
+}

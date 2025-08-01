@@ -1,0 +1,20 @@
+{
+  // Автоформатирование при сохранении
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // Автофикс ESLint при сохранении
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+
+  // Явное указание использовать настройки проекта
+  "prettier.enable": true,
+  "prettier.configPath": ".prettierrc",
+
+  // Для TypeScript и NestJS
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
